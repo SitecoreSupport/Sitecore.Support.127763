@@ -14,24 +14,40 @@
     };
 
     <div class="row">
-        <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-            <div class="input-group" style="width:100%">
-                <div class="input-group-addon">@Model.DayTitle</div>
-                @Html.DropDownListFor(x => x.Day, Model.Days, htmlAttributes)
-            </div>
-        </div>
-        <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-            <div class="input-group" style="width:100%">
-                <div class="input-group-addon">@Model.MonthTitle</div>
-                @Html.DropDownListFor(x => x.Month, Model.Months, htmlAttributes)
-            </div>
-        </div>
-        <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-            <div class="input-group" style="width:100%">
-                <div class="input-group-addon">@Model.YearTitle</div>
-                @Html.DropDownListFor(x => x.Year, Model.Years, htmlAttributes)
-            </div>
-        </div>
+        @{
+            List<string> splittedDate = new List<string>(Model.DateFormat.Split(new char[] { '-' }));
+            foreach (var date in splittedDate)
+            {
+                char firstDateChar = date.ToLower()[0];
+                if (firstDateChar == 'd')
+                {
+                    <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                        <div class="input-group" style="width:100%">
+                            <div class="input-group-addon">@Model.DayTitle</div>
+                            @Html.DropDownListFor(x => x.Day, Model.Days, htmlAttributes)
+                        </div>
+                    </div>
+                }
+                else if (firstDateChar == 'm')
+                {
+                    <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                        <div class="input-group" style="width:100%">
+                            <div class="input-group-addon">@Model.MonthTitle</div>
+                            @Html.DropDownListFor(x => x.Month, Model.Months, htmlAttributes)
+                        </div>
+                    </div>
+                }
+                else if (firstDateChar == 'y')
+                {
+                    <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                        <div class="input-group" style="width:100%">
+                            <div class="input-group-addon">@Model.YearTitle</div>
+                            @Html.DropDownListFor(x => x.Year, Model.Years, htmlAttributes)
+                        </div>
+                    </div>
+                }
+            }
+        }
     </div>
 
     @Html.RenderScriptBlock(
